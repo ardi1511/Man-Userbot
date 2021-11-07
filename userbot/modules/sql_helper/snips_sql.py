@@ -1,9 +1,6 @@
-try:
-    from userbot.modules.sql_helper import SESSION, BASE
-except ImportError:
-    raise AttributeError
-
 from sqlalchemy import Column, Numeric, UnicodeText
+
+from userbot.modules.sql_helper import BASE, SESSION
 
 
 class Snips(BASE):
@@ -56,7 +53,8 @@ def remove_snip(keyword):
     to_check = get_snip(keyword)
     if not to_check:
         return False
-    rem = SESSION.query(Snips).filter(Snips.snip == keyword)
-    rem.delete()
-    SESSION.commit()
-    return True
+    else:
+        rem = SESSION.query(Snips).filter(Snips.snip == keyword)
+        rem.delete()
+        SESSION.commit()
+        return True

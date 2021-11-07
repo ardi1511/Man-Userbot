@@ -949,22 +949,19 @@ async def _(message):
     h = [(u[0], u[1], u[2]), (u[0], u[1], ""), (u[0], "", "")]
     for something in reversed(
         [
-            y
-            for y in (
-                [
-                    "".join(x)
-                    for x in (
-                        f + (s, g, s + s * f.count(""), t),
-                        f + (g, s * 2 + s * f.count(""), t),
-                        f[:i] + (o, f[i], s * 2 + s * f.count(""), t),
-                        f[:i] + (s + s * f.count(""), o, f[i], s, t),
-                        f[:i] + (s * 2 + s * f.count(""), o, f[i], t),
-                        f[:i] + (s * 3 + s * f.count(""), o, t),
-                        f[:i] + (s * 3 + s * f.count(""), g, t),
-                    )
-                ]
-                for i, f in enumerate(reversed(h))
-            )
+            [
+                "".join(x)
+                for x in (
+                    f + (s, g, s + s * f.count(""), t),
+                    f + (g, s * 2 + s * f.count(""), t),
+                    f[:i] + (o, f[i], s * 2 + s * f.count(""), t),
+                    f[:i] + (s + s * f.count(""), o, f[i], s, t),
+                    f[:i] + (s * 2 + s * f.count(""), o, f[i], t),
+                    f[:i] + (s * 3 + s * f.count(""), o, t),
+                    f[:i] + (s * 3 + s * f.count(""), g, t),
+                )
+            ]
+            for i, f in enumerate(reversed(h))
         ]
     ):
         for something_else in something:
@@ -1334,7 +1331,7 @@ async def _(event):
 
         await event.edit(input_str)
 
-        animation_chars = ["▮", "▯", "▬", "▭" "‎"]
+        animation_chars = ["▮", "▯", "▬", "▭", "‎"]
 
         animation_interval = 0.1
 
@@ -1360,7 +1357,7 @@ async def _(event):
 
         await event.edit(input_str)
 
-        animation_chars = ["◧", "◨", "◧", "◨" "‎"]
+        animation_chars = ["◧", "◨", "◧", "◨", "‎"]
 
         animation_interval = 0.1
 
@@ -1386,7 +1383,7 @@ async def _(event):
 
         await event.edit(input_str)
 
-        animation_chars = ["╹", "╻", "╹", "╻" "‎"]
+        animation_chars = ["╹", "╻", "╹", "╻", "‎"]
 
         animation_interval = 0.1
 
@@ -1412,7 +1409,7 @@ async def _(event):
 
         await event.edit(input_str)
 
-        animation_chars = ["⚫", "⬤", "●", "∘" "‎"]
+        animation_chars = ["⚫", "⬤", "●", "∘", "‎"]
 
         animation_interval = 0.1
 
@@ -1438,7 +1435,7 @@ async def _(event):
 
         await event.edit(input_str)
 
-        animation_chars = ["🖤", "❤️", "🖤", "❤️" "‎"]
+        animation_chars = ["🖤", "❤️", "🖤", "❤️", "‎"]
 
         animation_interval = 0.1
 
@@ -1716,7 +1713,7 @@ async def _(event):
 
 CMD_HELP.update(
     {
-        "memes": f"`{cmd}eye`\
+        "funmemes": f"`{cmd}eye`\
 \nUsage: Lihat Sendiri.\
 \n\n`{cmd}earth`\
 \nusage: Memutar Bumi 🌎🌎\

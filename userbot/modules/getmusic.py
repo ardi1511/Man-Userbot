@@ -39,7 +39,7 @@ async def getmusic(cat):
     for i in user_data:
         video_link = i.get_attribute("href")
         break
-    command = f"youtube-dl -x --add-metadata --embed-thumbnail --audio-format mp3 {video_link}"
+    command = f"yt-dlp -x --add-metadata --embed-thumbnail --no-progress --audio-format mp3 {video_link}"
     os.system(command)
     return video_link
 
@@ -53,15 +53,15 @@ async def getmusicvideo(cat):
     for i in user_data:
         video_link = i.get_attribute("href")
         break
-    command = 'youtube-dl -f "[filesize<50M]" --merge-output-format mp4 ' + video_link
+    command = (
+        'yt-dlp -f "[filesize<50M]" --no-progress --merge-output-format mp4 '
+        + video_link
+    )
     os.system(command)
 
 
 @bot.on(man_cmd(outgoing=True, pattern=r"song (.*)"))
 async def _(event):
-    event.message.id
-    if event.reply_to_msg_id:
-        event.reply_to_msg_id
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
@@ -98,9 +98,6 @@ async def _(event):
 
 @bot.on(man_cmd(outgoing=True, pattern=r"vsong(?: |$)(.*)"))
 async def _(event):
-    event.message.id
-    if event.reply_to_msg_id:
-        event.reply_to_msg_id
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
@@ -123,15 +120,9 @@ async def _(event):
     try:
         loa = l[0]
         metadata = extractMetadata(createParser(loa))
-        duration = 0
-        width = 0
-        height = 0
-        if metadata.has("duration"):
-            duration = metadata.get("duration").seconds
-        if metadata.has("width"):
-            width = metadata.get("width")
-        if metadata.has("height"):
-            height = metadata.get("height")
+        duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+        width = metadata.get("width") if metadata.has("width") else 0
+        height = metadata.get("height") if metadata.has("height") else 0
         os.system("cp *mp4 thumb.mp4")
         os.system("ffmpeg -i thumb.mp4 -vframes 1 -an -s 480x360 -ss 5 thumb.jpg")
         thumb_image = "thumb.jpg"
@@ -403,15 +394,9 @@ async def _(event):
 
 async def upload_track(track_location, message):
     metadata = extractMetadata(createParser(track_location))
-    duration = 0
-    title = ""
-    performer = ""
-    if metadata.has("duration"):
-        duration = metadata.get("duration").seconds
-    if metadata.has("title"):
-        title = metadata.get("title")
-    if metadata.has("artist"):
-        performer = metadata.get("artist")
+    duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+    title = metadata.get("title") if metadata.has("title") else ""
+    performer = metadata.get("artist") if metadata.has("artist") else ""
     document_attributes = [
         DocumentAttributeAudio(
             duration=duration,
@@ -444,18 +429,6 @@ async def upload_track(track_location, message):
         attributes=document_attributes,
     )
     os.remove(track_location)
-
-
-CMD_HELP.update(
-    {
-        "youtubedl": "**Plugin : **`youtubedl`\
-        \n\n  •  **Syntax :** `.song` <nama lagu>\
-        \n  •  **Function : **Untuk Mencari dan mendownload lagu dari youtube.\
-        \n\n  •  **Syntax :** `.vsong` <nama lagu>\
-        \n  •  **Function : **Untuk Mencari dan mendownload Video  dari youtube.\
-    "
-    }
-)
 
 
 CMD_HELP.update(
